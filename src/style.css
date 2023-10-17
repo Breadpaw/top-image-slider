@@ -1,5 +1,17 @@
-.slider {
+body {
+    margin:0;
+}
+
+.main {
     width: 100vw;
-    height: 50px;
+    height: 300px;
     background-color: red;
+
+    display: flex;
+    justify-content: space-around;
+}
+
+.slider {
+    width: 100%;
+    height: 100%;
 }

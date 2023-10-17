@@ -4,11 +4,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-const isProduction = process.env.NODE_ENV == 'production';
-
-const stylesHandler = isProduction
-	? MiniCssExtractPlugin.loader
-	: 'style-loader';
+const isProduction = process.env.NODE_ENV == 'development';
 
 const config = {
 	entry: './src/index.js',
@@ -22,7 +18,6 @@ const config = {
 	plugins: [
 		new HtmlWebpackPlugin({
             title: 'Image Slidert',
-			// template: './src/index.html',
             filename: 'index.html',
 		}),
 
@@ -37,17 +32,20 @@ const config = {
 			},
 			{
 				test: /\.css$/i,
-				use: [stylesHandler, 'css-loader'],
+				use: ['style-loader', 'css-loader'],
 			},
 			{
 				test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
-				type: 'asset',
+				type: 'asset/resource',
 			},
 
 			// Add your rules for custom modules here
 			// Learn more about loaders from https://webpack.js.org/loaders/
 		],
 	},
+	output: {
+		clean: true,
+	}
 };
 
 module.exports = () => {
