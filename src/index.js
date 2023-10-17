@@ -13,7 +13,7 @@ document.body.appendChild(mainContainer);
 // create image container
 const sliderContainer = document.createElement('div');
 sliderContainer.classList.add('slider')
-mainContainer.body.appendChild(sliderContainer);
+mainContainer.appendChild(sliderContainer);
 
 // Create slider array to hold images
 const imageArray = [];
