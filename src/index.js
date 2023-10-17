@@ -15,6 +15,11 @@ const sliderContainer = document.createElement('div');
 sliderContainer.classList.add('slider')
 mainContainer.appendChild(sliderContainer);
 
+// create div for buttons
+const buttonDiv = document.createElement('div');
+buttonDiv.classList.add('buttons');
+document.body.appendChild(buttonDiv);
+
 // Create slider array to hold images
 const imageArray = [];
 
@@ -34,19 +39,14 @@ function addSliderImage(importedImage, sliderImageArray){
 // add counter to count position in images array
 let imageArrayCounter = 0;
 
-// create button to control the images
+// create "next"-button to control the images
 const nextBtn = document.createElement('button');
 nextBtn.innerText = 'Next Image';
-sliderContainer.appendChild(nextBtn);
+buttonDiv.appendChild(nextBtn);
 
 nextBtn.onclick = () => {
-    if(sliderContainer.childNodes.length > 1){
-        sliderContainer.removeChild(sliderContainer.lastChild);
-    }
-
-    const image = new Image();
-    image.src = imageArray[imageArrayCounter];
-    sliderContainer.appendChild(image)
+    
+    showImage();
 
     //increment the imageArrayCounter
     imageArrayCounter += 1;
@@ -54,4 +54,36 @@ nextBtn.onclick = () => {
     if (imageArrayCounter === imageArray.length) {
         imageArrayCounter = 0;
     }
+
+}
+
+// create "previous"-button to control the images
+const prevBtn = document.createElement('button');
+prevBtn.innerText = 'Previous Image';
+buttonDiv.appendChild(prevBtn);
+
+prevBtn.onclick = () => {
+    imageArrayCounter -= 1;
+    if(imageArrayCounter < 0) {
+        imageArrayCounter = imageArray.length-1
+    }
+
+    // New function from HERE
+    
+    showImage();
+
+    // TO HERE
+
+}
+
+function showImage() {
+    if(sliderContainer.childNodes.length > 0){
+        sliderContainer.removeChild(sliderContainer.lastChild);
+    }
+
+    const image = new Image();
+    image.src = imageArray[imageArrayCounter];
+    sliderContainer.appendChild(image)
+
+    console.log(imageArrayCounter)
 }
