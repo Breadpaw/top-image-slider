@@ -21,8 +21,8 @@ const config = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-            title: 'Image Slider',
-			template: './src/index.html',
+            title: 'Image Slidert',
+			// template: './src/index.html',
             filename: 'index.html',
 		}),
 
