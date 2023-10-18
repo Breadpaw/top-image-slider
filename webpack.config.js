@@ -18,7 +18,7 @@ const config = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-            title: 'Image Slidert',
+            title: 'Image Slider',
             filename: 'index.html',
 		}),
 
@@ -27,10 +27,6 @@ const config = {
 	],
 	module: {
 		rules: [
-			{
-				test: /\.(js|jsx)$/i,
-				loader: 'babel-loader',
-			},
 			{
 				test: /\.css$/i,
 				use: ['style-loader', 'css-loader'],
