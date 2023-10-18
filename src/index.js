@@ -48,13 +48,7 @@ function addNextButton(container) {
 	container.appendChild(nextBtn);
 
 	nextBtn.onclick = () => {
-		//increment the imageArrayCounter
-		imageArrayCounter += 1;
-
-		if (imageArrayCounter === imageArray.length) {
-			imageArrayCounter = 0;
-		}
-
+		increaseCounter();
         showImage(imageArrayCounter);
 	};
 }
@@ -66,11 +60,7 @@ function addPreviousButton(container) {
 	container.appendChild(prevBtn);
 
 	prevBtn.onclick = () => {
-		imageArrayCounter -= 1;
-		if (imageArrayCounter < 0) {
-			imageArrayCounter = imageArray.length - 1;
-		}
-
+		decreaseCounter();
 		showImage(imageArrayCounter);
 	};
 }
@@ -133,10 +123,30 @@ function renderCircles(activeImageNumber){
 		const circle = document.createElement('span');
 		circle.classList.add('circle');
 		circle.innerText = element;
-		circle.addEventListener('click', () => { 
+		circle.addEventListener('click', () => {
+			setCounter(i)
 			showImage(i)			
 			renderCircles(i)
 		});
 		circleContainer.appendChild(circle);
 	}
+}
+
+function increaseCounter(){
+	imageArrayCounter += 1;
+
+	if (imageArrayCounter === imageArray.length) {
+		imageArrayCounter = 0;
+	}
+}
+
+function decreaseCounter(){
+	imageArrayCounter -= 1;
+		if (imageArrayCounter < 0) {
+			imageArrayCounter = imageArray.length - 1;
+		}
+}
+
+function setCounter(number){
+	imageArrayCounter = number;
 }
