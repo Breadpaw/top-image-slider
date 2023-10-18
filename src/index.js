@@ -33,16 +33,13 @@ addSliderImage(Bb_shirt, imageArray);
 addSliderImage(Shirt, imageArray);
 addSliderImage(Cameo, imageArray);
 
-// Show the first image
-showImage(imageArrayCounter);
-
 // add controls (buttons and circles)
 addNextButton(buttonDiv);
 addCirclesContainer(buttonDiv);
 addPreviousButton(buttonDiv);
 
-// render the circles for current state
-renderCircles(imageArrayCounter);
+// Show the first image
+showImage(imageArrayCounter);
 
 function addNextButton(container) {
 	// create "next"-button to control the images
@@ -99,6 +96,9 @@ function showImage(activeImageNumber) {
 	const image = new Image();
 	image.src = imageArray[activeImageNumber];
 	sliderContainer.appendChild(image);
+
+	// render the circles for current state
+	renderCircles(activeImageNumber);
 }
 
 function addCirclesContainer(container){
