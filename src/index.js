@@ -37,21 +37,24 @@ addSliderImage(Cameo, imageArray);
 addNextButton(buttonDiv);
 addPreviousButton(buttonDiv);
 
+// Show the first image
+showImage()
+
 function addNextButton(container) {
 	// create "next"-button to control the images
 	const nextBtn = document.createElement('button');
 	nextBtn.innerText = 'Next Image';
-	buttonDiv.appendChild(nextBtn);
+	container.appendChild(nextBtn);
 
 	nextBtn.onclick = () => {
-		showImage();
-
 		//increment the imageArrayCounter
 		imageArrayCounter += 1;
 
 		if (imageArrayCounter === imageArray.length) {
 			imageArrayCounter = 0;
 		}
+
+        showImage();
 	};
 }
 
@@ -59,7 +62,7 @@ function addPreviousButton(container) {
 	// create "previous"-button to control the images
 	const prevBtn = document.createElement('button');
 	prevBtn.innerText = 'Previous Image';
-	buttonDiv.appendChild(prevBtn);
+	container.appendChild(prevBtn);
 
 	prevBtn.onclick = () => {
 		imageArrayCounter -= 1;
