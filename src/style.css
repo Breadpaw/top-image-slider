@@ -11,8 +11,26 @@ body {
     justify-content: space-around;
 }
 
-.slider {
+.imageContainer {
     height: 300px;
+}
+
+.fadeIn {
+    animation: fadeIn 1s;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0;}
+    100% {opacity: 1;}
+}
+
+.fadeOut {
+    animation: fadeOut 1s;
+}
+
+@keyframes fadeOut {
+    0% { opacity: 1;}
+    100% { opacity: 0;}
 }
 
 .buttons {
