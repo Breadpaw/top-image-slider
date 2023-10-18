@@ -90,6 +90,8 @@ function addSliderImage(importedImage, sliderImageArray) {
 }
 
 function showImage(activeImageNumber) {
+	console.log(`showing image number ${activeImageNumber}`)
+
 	if (sliderContainer.childNodes.length > 0) {
 		sliderContainer.removeChild(sliderContainer.lastChild);
 	}
@@ -97,14 +99,14 @@ function showImage(activeImageNumber) {
 	const image = new Image();
 	image.src = imageArray[activeImageNumber];
 	sliderContainer.appendChild(image);
-
-	console.log(imageArrayCounter);
 }
 
 function renderCircles(container, activeImageNumber){
 
 	// add empty circles to navigate slider
 	const array = ["○","○","○","○","○"];
+
+	// replace the active slider element with a solid circle
 
 	// render circles container in html
 	const circleContainer = document.createElement('div');
@@ -118,7 +120,7 @@ function renderCircles(container, activeImageNumber){
 		const circle = document.createElement('span');
 		circle.classList.add('circle');
 		circle.innerText = element;
-		circle.addEventListener('click', (i) => showImage(i));
+		circle.addEventListener('click', () => showImage(i));
 		circleContainer.appendChild(circle);
 	}
 }
