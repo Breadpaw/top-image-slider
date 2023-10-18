@@ -33,14 +33,16 @@ addSliderImage(Bb_shirt, imageArray);
 addSliderImage(Shirt, imageArray);
 addSliderImage(Cameo, imageArray);
 
-// add controls (buttons and circles)
+// Show the first image
+showImage(imageArrayCounter);
 
+// add controls (buttons and circles)
 addNextButton(buttonDiv);
-renderCircles(buttonDiv);
+addCirclesContainer(buttonDiv);
 addPreviousButton(buttonDiv);
 
-// Show the first image
-showImage(imageArrayCounter)
+// render the circles for current state
+renderCircles(imageArrayCounter);
 
 function addNextButton(container) {
 	// create "next"-button to control the images
@@ -76,8 +78,6 @@ function addPreviousButton(container) {
 	};
 }
 
-
-
 // Correlate shown image with circle from Array and replace with solid circle
 
 // Helper Functions
@@ -101,17 +101,30 @@ function showImage(activeImageNumber) {
 	sliderContainer.appendChild(image);
 }
 
-function renderCircles(container, activeImageNumber){
+function addCirclesContainer(container){
 
-	// add empty circles to navigate slider
-	const array = ["○","○","○","○","○"];
-
-	// replace the active slider element with a solid circle
-
-	// render circles container in html
 	const circleContainer = document.createElement('div');
 	circleContainer.classList.add('circleContainer');
 	container.appendChild(circleContainer)
+
+}
+
+function renderCircles(activeImageNumber){
+
+	// get the element to contain circles
+	const circleContainer = document.querySelector('div.circleContainer')
+
+	// Clear the circles if there are any
+	while(circleContainer.hasChildNodes()){
+		circleContainer.removeChild(circleContainer.lastChild);
+	}
+
+	// add empty circles to navigate slider
+	const array = Array(5).fill("○");
+
+	// replace the active slider element with a solid circle
+	const solidCircle = "●";
+	array[activeImageNumber] = solidCircle;
 	
 	// render circles and add event listeners
 	for (let i = 0; i < array.length; i++) {
@@ -120,7 +133,10 @@ function renderCircles(container, activeImageNumber){
 		const circle = document.createElement('span');
 		circle.classList.add('circle');
 		circle.innerText = element;
-		circle.addEventListener('click', () => showImage(i));
+		circle.addEventListener('click', () => { 
+			showImage(i)			
+			renderCircles(i)
+		});
 		circleContainer.appendChild(circle);
 	}
 }
