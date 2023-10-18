@@ -33,12 +33,14 @@ addSliderImage(Bb_shirt, imageArray);
 addSliderImage(Shirt, imageArray);
 addSliderImage(Cameo, imageArray);
 
-// add interface buttons
+// add controls (buttons and circles)
+
 addNextButton(buttonDiv);
+renderCircles(buttonDiv);
 addPreviousButton(buttonDiv);
 
 // Show the first image
-showImage()
+showImage(imageArrayCounter)
 
 function addNextButton(container) {
 	// create "next"-button to control the images
@@ -54,7 +56,7 @@ function addNextButton(container) {
 			imageArrayCounter = 0;
 		}
 
-        showImage();
+        showImage(imageArrayCounter);
 	};
 }
 
@@ -70,9 +72,13 @@ function addPreviousButton(container) {
 			imageArrayCounter = imageArray.length - 1;
 		}
 
-		showImage();
+		showImage(imageArrayCounter);
 	};
 }
+
+
+
+// Correlate shown image with circle from Array and replace with solid circle
 
 // Helper Functions
 
@@ -83,14 +89,36 @@ function addSliderImage(importedImage, sliderImageArray) {
 	sliderImageArray.push(importedImage);
 }
 
-function showImage() {
+function showImage(activeImageNumber) {
 	if (sliderContainer.childNodes.length > 0) {
 		sliderContainer.removeChild(sliderContainer.lastChild);
 	}
 
 	const image = new Image();
-	image.src = imageArray[imageArrayCounter];
+	image.src = imageArray[activeImageNumber];
 	sliderContainer.appendChild(image);
 
 	console.log(imageArrayCounter);
+}
+
+function renderCircles(container, activeImageNumber){
+
+	// add empty circles to navigate slider
+	const array = ["○","○","○","○","○"];
+
+	// render circles container in html
+	const circleContainer = document.createElement('div');
+	circleContainer.classList.add('circleContainer');
+	container.appendChild(circleContainer)
+	
+	// render circles and add event listeners
+	for (let i = 0; i < array.length; i++) {
+		const element = array[i];
+		
+		const circle = document.createElement('span');
+		circle.classList.add('circle');
+		circle.innerText = element;
+		circle.addEventListener('click', (i) => showImage(i));
+		circleContainer.appendChild(circle);
+	}
 }
