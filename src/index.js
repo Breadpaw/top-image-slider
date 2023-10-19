@@ -38,6 +38,10 @@ addNextButton(buttonDiv);
 addCirclesContainer(buttonDiv);
 addPreviousButton(buttonDiv);
 
+// set autoplay to fire nextImage every 5 sec
+let intervalID = false;
+intervalID = setAutoPlay();
+
 // Show the first image
 showImage(imageArrayCounter);
 
@@ -65,8 +69,6 @@ function addPreviousButton(container) {
 	};
 }
 
-// Correlate shown image with circle from Array and replace with solid circle
-
 // Helper Functions
 
 function addSliderImage(importedImage, sliderImageArray) {
@@ -85,6 +87,9 @@ function showImage(activeImageNumber) {
 	// render the circles for current state, which changes every showing of images
 	renderCircles(activeImageNumber);
 
+	// reset autoplay
+	setAutoPlay();
+
 	function unloadImage() {
 		const imageContainer = document.querySelector('div.imageContainer');
 		// check if any image shown. If so, fade it out
@@ -93,7 +98,6 @@ function showImage(activeImageNumber) {
 			const currentImage = sliderContainer.lastChild;
 			// add css to fade the element out
 			fadeOut(currentImage);
-			// TODO make setTimeout with currentImage.style.animationPlayState or something
 		}
 	}
 
@@ -167,10 +171,26 @@ function setCounter(number) {
 }
 
 // visual effect functions
+
 function fadeIn(element) {
 	element.classList.add('fadeIn');
 }
 
 function fadeOut(element) {
 	element.classList.add('fadeOut');
+}
+
+function setAutoPlay(){
+	// clear previously set interval
+	console.log('clearing interval')
+	if(intervalID){
+		clearInterval(intervalID)
+	}
+	// set new interval
+	intervalID = setInterval(()=>{
+		increaseCounter();
+		showImage(imageArrayCounter);
+	}, 5000);
+
+	return intervalID;
 }
