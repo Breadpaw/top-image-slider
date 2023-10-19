@@ -104,8 +104,6 @@ function showImage(activeImageNumber) {
 
 		const image = new Image();
 		image.src = imageArray[activeImageNumber];
-		// set opacity at 0 to fade in the new image
-		image.style.opacity = 0;
 		sliderContainer.appendChild(image);
 		fadeIn(image)
 	}
