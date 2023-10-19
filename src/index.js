@@ -12,7 +12,7 @@ document.body.appendChild(mainContainer);
 
 // create image container
 const sliderContainer = document.createElement('div');
-sliderContainer.classList.add('slider');
+sliderContainer.classList.add('imageContainer');
 mainContainer.appendChild(sliderContainer);
 
 // create div for buttons
@@ -49,7 +49,7 @@ function addNextButton(container) {
 
 	nextBtn.onclick = () => {
 		increaseCounter();
-        showImage(imageArrayCounter);
+		showImage(imageArrayCounter);
 	};
 }
 
@@ -77,62 +77,79 @@ function addSliderImage(importedImage, sliderImageArray) {
 }
 
 function showImage(activeImageNumber) {
-	console.log(`showing image number ${activeImageNumber}`)
 
-	if (sliderContainer.childNodes.length > 0) {
-		sliderContainer.removeChild(sliderContainer.lastChild);
+	unloadImage();
+	// Set timeout to allow for the fade-out to show
+	setTimeout(()=>loadImage(), 1000);
+
+	// render the circles for current state, which changes every showing of images
+	renderCircles(activeImageNumber);
+
+	function unloadImage() {
+		const imageContainer = document.querySelector('div.imageContainer');
+		// check if any image shown. If so, fade it out
+		if (imageContainer.hasChildNodes()) {
+			// code to select shown image
+			const currentImage = sliderContainer.lastChild;
+			// add css to fade the element out
+			fadeOut(currentImage);
+			// TODO make setTimeout with currentImage.style.animationPlayState or something
+		}
 	}
 
-	const image = new Image();
-	image.src = imageArray[activeImageNumber];
-	sliderContainer.appendChild(image);
+	function loadImage() {
+		if (sliderContainer.childNodes.length > 0) {
+			sliderContainer.removeChild(sliderContainer.lastChild);
+		}
 
-	// render the circles for current state
-	renderCircles(activeImageNumber);
+		const image = new Image();
+		image.src = imageArray[activeImageNumber];
+		// set opacity at 0 to fade in the new image
+		image.style.opacity = 0;
+		sliderContainer.appendChild(image);
+		fadeIn(image)
+	}
 }
 
-function addCirclesContainer(container){
-
+function addCirclesContainer(container) {
 	const circleContainer = document.createElement('div');
 	circleContainer.classList.add('circleContainer');
-	container.appendChild(circleContainer)
-
+	container.appendChild(circleContainer);
 }
 
-function renderCircles(activeImageNumber){
-
+function renderCircles(activeImageNumber) {
 	// get the element to contain circles
-	const circleContainer = document.querySelector('div.circleContainer')
+	const circleContainer = document.querySelector('div.circleContainer');
 
 	// Clear the circles if there are any
-	while(circleContainer.hasChildNodes()){
+	while (circleContainer.hasChildNodes()) {
 		circleContainer.removeChild(circleContainer.lastChild);
 	}
 
 	// add empty circles to navigate slider
-	const array = Array(5).fill("○");
+	const array = Array(5).fill('○');
 
 	// replace the active slider element with a solid circle
-	const solidCircle = "●";
+	const solidCircle = '●';
 	array[activeImageNumber] = solidCircle;
-	
+
 	// render circles and add event listeners
 	for (let i = 0; i < array.length; i++) {
 		const element = array[i];
-		
+
 		const circle = document.createElement('span');
 		circle.classList.add('circle');
 		circle.innerText = element;
 		circle.addEventListener('click', () => {
-			setCounter(i)
-			showImage(i)			
-			renderCircles(i)
+			setCounter(i);
+			showImage(i);
+			renderCircles(i);
 		});
 		circleContainer.appendChild(circle);
 	}
 }
 
-function increaseCounter(){
+function increaseCounter() {
 	imageArrayCounter += 1;
 
 	if (imageArrayCounter === imageArray.length) {
@@ -140,13 +157,22 @@ function increaseCounter(){
 	}
 }
 
-function decreaseCounter(){
+function decreaseCounter() {
 	imageArrayCounter -= 1;
-		if (imageArrayCounter < 0) {
-			imageArrayCounter = imageArray.length - 1;
-		}
+	if (imageArrayCounter < 0) {
+		imageArrayCounter = imageArray.length - 1;
+	}
 }
 
-function setCounter(number){
+function setCounter(number) {
 	imageArrayCounter = number;
+}
+
+// visual effect functions
+function fadeIn(element) {
+	element.classList.add('fadeIn');
+}
+
+function fadeOut(element) {
+	element.classList.add('fadeOut');
 }
