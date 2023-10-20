@@ -78,26 +78,23 @@ function addSliderImage(importedImage, sliderImageArray) {
 	sliderImageArray.push(importedImage);
 }
 
-function showImage(activeImageNumber) {
+async function showImage(activeImageNumber) {
 
-	unloadImage();
-	// Set timeout to allow for the fade-out to show
-	setTimeout(()=>loadImage(), 1000);
-
+	await unloadImage().then(loadImage());
 	// render the circles for current state, which changes every showing of images
 	renderCircles(activeImageNumber);
 
 	// reset autoplay
 	setAutoPlay();
 
-	function unloadImage() {
+	async function unloadImage() {
 		const imageContainer = document.querySelector('div.imageContainer');
 		// check if any image shown. If so, fade it out
 		if (imageContainer.hasChildNodes()) {
 			// code to select shown image
 			const currentImage = sliderContainer.lastChild;
 			// add css to fade the element out
-			fadeOut(currentImage);
+			await fadeOut(currentImage);
 		}
 	}
 
@@ -177,6 +174,12 @@ function fadeIn(element) {
 }
 
 function fadeOut(element) {
+	element.classList.add('fadeOut');
+}
+
+async function outFade(element) {
+	// set timeout to 1s, equaling fadeOut style selection
+	setTimeout(() => Promise.resolve(), 1000);
 	element.classList.add('fadeOut');
 }
 
